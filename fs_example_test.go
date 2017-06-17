@@ -3,7 +3,7 @@ package fasthttp_test
 import (
 	"log"
 
-	"github.com/erikdubbelboer/fasthttp"
+	"github.com/OptiServer/fasthttp"
 )
 
 func ExampleFS() {

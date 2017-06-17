@@ -6,7 +6,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/erikdubbelboer/fasthttp"
+	"github.com/OptiServer/fasthttp"
 )
 
 func TestExpvarHandlerBasic(t *testing.T) {

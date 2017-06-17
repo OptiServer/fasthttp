@@ -14,7 +14,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/erikdubbelboer/fasthttp/fasthttputil"
+	"github.com/OptiServer/fasthttp/fasthttputil"
 )
 
 func TestServerErrSmallBuffer(t *testing.T) {

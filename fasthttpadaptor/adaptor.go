@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"net/url"
 
-	"github.com/erikdubbelboer/fasthttp"
+	"github.com/OptiServer/fasthttp"
 )
 
 // NewFastHTTPHandlerFunc wraps net/http handler func to fasthttp
@@ -25,7 +25,7 @@ import (
 //
 // So it is advisable using this function only for quick net/http -> fasthttp
 // switching. Then manually convert net/http handlers to fasthttp handlers
-// according to https://github.com/erikdubbelboer/fasthttp#switching-from-nethttp-to-fasthttp .
+// according to https://github.com/OptiServer/fasthttp#switching-from-nethttp-to-fasthttp .
 func NewFastHTTPHandlerFunc(h http.HandlerFunc) fasthttp.RequestHandler {
 	return NewFastHTTPHandler(h)
 }
@@ -45,7 +45,7 @@ func NewFastHTTPHandlerFunc(h http.HandlerFunc) fasthttp.RequestHandler {
 //
 // So it is advisable using this function only for quick net/http -> fasthttp
 // switching. Then manually convert net/http handlers to fasthttp handlers
-// according to https://github.com/erikdubbelboer/fasthttp#switching-from-nethttp-to-fasthttp .
+// according to https://github.com/OptiServer/fasthttp#switching-from-nethttp-to-fasthttp .
 func NewFastHTTPHandler(h http.Handler) fasthttp.RequestHandler {
 	return func(ctx *fasthttp.RequestCtx) {
 		var r http.Request

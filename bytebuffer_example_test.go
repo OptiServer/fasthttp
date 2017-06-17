@@ -3,7 +3,7 @@ package fasthttp_test
 import (
 	"fmt"
 
-	"github.com/erikdubbelboer/fasthttp"
+	"github.com/OptiServer/fasthttp"
 )
 
 func ExampleByteBuffer() {

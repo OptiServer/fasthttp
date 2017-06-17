@@ -4,8 +4,8 @@ import (
 	"net/http/pprof"
 	"strings"
 
-	"github.com/erikdubbelboer/fasthttp"
-	"github.com/erikdubbelboer/fasthttp/fasthttpadaptor"
+	"github.com/OptiServer/fasthttp"
+	"github.com/OptiServer/fasthttp/fasthttpadaptor"
 )
 
 var (

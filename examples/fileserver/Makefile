@@ -1,6 +1,6 @@
 fileserver: clean
-	go get -u github.com/erikdubbelboer/fasthttp
-	go get -u github.com/erikdubbelboer/fasthttp/expvarhandler
+	go get -u github.com/OptiServer/fasthttp
+	go get -u github.com/OptiServer/fasthttp/expvarhandler
 	go build
 
 clean:

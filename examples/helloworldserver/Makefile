@@ -1,5 +1,5 @@
 helloworldserver: clean
-	go get -u github.com/erikdubbelboer/fasthttp
+	go get -u github.com/OptiServer/fasthttp
 	go build
 
 clean:

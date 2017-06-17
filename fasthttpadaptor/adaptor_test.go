@@ -9,7 +9,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/erikdubbelboer/fasthttp"
+	"github.com/OptiServer/fasthttp"
 )
 
 func TestNewFastHTTPHandler(t *testing.T) {

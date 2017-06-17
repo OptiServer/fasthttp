@@ -9,8 +9,8 @@ import (
 	"flag"
 	"log"
 
-	"github.com/erikdubbelboer/fasthttp"
-	"github.com/erikdubbelboer/fasthttp/expvarhandler"
+	"github.com/OptiServer/fasthttp"
+	"github.com/OptiServer/fasthttp/expvarhandler"
 )
 
 var (

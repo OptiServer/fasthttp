@@ -5,8 +5,8 @@ import (
 	"net"
 	"testing"
 
-	"github.com/erikdubbelboer/fasthttp"
-	"github.com/erikdubbelboer/fasthttp/fasthttputil"
+	"github.com/OptiServer/fasthttp"
+	"github.com/OptiServer/fasthttp/fasthttputil"
 )
 
 // BenchmarkPlainStreaming measures end-to-end plaintext streaming performance

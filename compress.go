@@ -7,7 +7,7 @@ import (
 	"os"
 	"sync"
 
-	"github.com/erikdubbelboer/fasthttp/stackless"
+	"github.com/OptiServer/fasthttp/stackless"
 	"github.com/klauspost/compress/flate"
 	"github.com/klauspost/compress/gzip"
 	"github.com/klauspost/compress/zlib"

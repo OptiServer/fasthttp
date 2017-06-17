@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"log"
 
-	"github.com/erikdubbelboer/fasthttp"
+	"github.com/OptiServer/fasthttp"
 )
 
 // Setup file handlers (aka 'file server config')

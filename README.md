@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/erikdubbelboer/fasthttp.svg)](https://travis-ci.org/erikdubbelboer/fasthttp)
-[![GoDoc](https://godoc.org/github.com/erikdubbelboer/fasthttp?status.svg)](http://godoc.org/github.com/erikdubbelboer/fasthttp)
-[![Go Report](https://goreportcard.com/badge/github.com/erikdubbelboer/fasthttp)](https://goreportcard.com/report/github.com/erikdubbelboer/fasthttp)
+[![GoDoc](https://godoc.org/github.com/OptiServer/fasthttp?status.svg)](http://godoc.org/github.com/OptiServer/fasthttp)
+[![Go Report](https://goreportcard.com/badge/github.com/OptiServer/fasthttp)](https://goreportcard.com/report/github.com/OptiServer/fasthttp)
 
 # fasthttp
 Fast HTTP implementation for Go.
@@ -17,9 +17,9 @@ connections per physical server.
 
 [Install](#install)
 
-[Documentation](https://godoc.org/github.com/erikdubbelboer/fasthttp)
+[Documentation](https://godoc.org/github.com/OptiServer/fasthttp)
 
-[Examples from docs](https://godoc.org/github.com/erikdubbelboer/fasthttp#pkg-examples)
+[Examples from docs](https://godoc.org/github.com/OptiServer/fasthttp#pkg-examples)
 
 [Code examples](examples)
 
@@ -159,7 +159,7 @@ BenchmarkClientGetEndToEnd1000Inmemory-4                	10000000	      1316 ns/
 # Install
 
 ```
-go get -u github.com/erikdubbelboer/fasthttp
+go get -u github.com/OptiServer/fasthttp
 ```
 
 
@@ -167,13 +167,13 @@ go get -u github.com/erikdubbelboer/fasthttp
 
 Unfortunately, fasthttp doesn't provide API identical to net/http.
 See the [FAQ](#faq) for details.
-There is [net/http -> fasthttp handler converter](https://godoc.org/github.com/erikdubbelboer/fasthttp/fasthttpadaptor),
+There is [net/http -> fasthttp handler converter](https://godoc.org/github.com/OptiServer/fasthttp/fasthttpadaptor),
 but it is better to write fasthttp request handlers by hand in order to use 
 all of the fasthttp advantages (especially high performance :) ).
 
 Important points:
 
-* Fasthttp works with [RequestHandler functions](https://godoc.org/github.com/erikdubbelboer/fasthttp#RequestHandler)
+* Fasthttp works with [RequestHandler functions](https://godoc.org/github.com/OptiServer/fasthttp#RequestHandler)
 instead of objects implementing [Handler interface](https://golang.org/pkg/net/http/#Handler).
 Fortunately, it is easy to pass bound struct methods to fasthttp:
 
@@ -204,8 +204,8 @@ Fortunately, it is easy to pass bound struct methods to fasthttp:
   fasthttp.ListenAndServe(":8081", fastHTTPHandler)
   ```
 
-* The [RequestHandler](https://godoc.org/github.com/erikdubbelboer/fasthttp#RequestHandler)
-accepts only one argument - [RequestCtx](https://godoc.org/github.com/erikdubbelboer/fasthttp#RequestCtx).
+* The [RequestHandler](https://godoc.org/github.com/OptiServer/fasthttp#RequestHandler)
+accepts only one argument - [RequestCtx](https://godoc.org/github.com/OptiServer/fasthttp#RequestCtx).
 It contains all the functionality required for http request processing
 and response writing. Below is an example of a simple request handler conversion
 from net/http to fasthttp.
@@ -320,78 +320,78 @@ with fasthttp support:
 		ctx *fasthttp.RequestCtx
 	)
   ```
-  * r.Body -> [ctx.PostBody()](https://godoc.org/github.com/erikdubbelboer/fasthttp#RequestCtx.PostBody)
-  * r.URL.Path -> [ctx.Path()](https://godoc.org/github.com/erikdubbelboer/fasthttp#RequestCtx.Path)
-  * r.URL -> [ctx.URI()](https://godoc.org/github.com/erikdubbelboer/fasthttp#RequestCtx.URI)
-  * r.Method -> [ctx.Method()](https://godoc.org/github.com/erikdubbelboer/fasthttp#RequestCtx.Method)
-  * r.Header -> [ctx.Request.Header](https://godoc.org/github.com/erikdubbelboer/fasthttp#RequestHeader)
-  * r.Header.Get() -> [ctx.Request.Header.Peek()](https://godoc.org/github.com/erikdubbelboer/fasthttp#RequestHeader.Peek)
-  * r.Host -> [ctx.Host()](https://godoc.org/github.com/erikdubbelboer/fasthttp#RequestCtx.Host)
-  * r.Form -> [ctx.QueryArgs()](https://godoc.org/github.com/erikdubbelboer/fasthttp#RequestCtx.QueryArgs) +
-  [ctx.PostArgs()](https://godoc.org/github.com/erikdubbelboer/fasthttp#RequestCtx.PostArgs)
-  * r.PostForm -> [ctx.PostArgs()](https://godoc.org/github.com/erikdubbelboer/fasthttp#RequestCtx.PostArgs)
-  * r.FormValue() -> [ctx.FormValue()](https://godoc.org/github.com/erikdubbelboer/fasthttp#RequestCtx.FormValue)
-  * r.FormFile() -> [ctx.FormFile()](https://godoc.org/github.com/erikdubbelboer/fasthttp#RequestCtx.FormFile)
-  * r.MultipartForm -> [ctx.MultipartForm()](https://godoc.org/github.com/erikdubbelboer/fasthttp#RequestCtx.MultipartForm)
-  * r.RemoteAddr -> [ctx.RemoteAddr()](https://godoc.org/github.com/erikdubbelboer/fasthttp#RequestCtx.RemoteAddr)
-  * r.RequestURI -> [ctx.RequestURI()](https://godoc.org/github.com/erikdubbelboer/fasthttp#RequestCtx.RequestURI)
-  * r.TLS -> [ctx.IsTLS()](https://godoc.org/github.com/erikdubbelboer/fasthttp#RequestCtx.IsTLS)
-  * r.Cookie() -> [ctx.Request.Header.Cookie()](https://godoc.org/github.com/erikdubbelboer/fasthttp#RequestHeader.Cookie)
-  * r.Referer() -> [ctx.Referer()](https://godoc.org/github.com/erikdubbelboer/fasthttp#RequestCtx.Referer)
-  * r.UserAgent() -> [ctx.UserAgent()](https://godoc.org/github.com/erikdubbelboer/fasthttp#RequestCtx.UserAgent)
-  * w.Header() -> [ctx.Response.Header](https://godoc.org/github.com/erikdubbelboer/fasthttp#ResponseHeader)
-  * w.Header().Set() -> [ctx.Response.Header.Set()](https://godoc.org/github.com/erikdubbelboer/fasthttp#ResponseHeader.Set)
-  * w.Header().Set("Content-Type") -> [ctx.SetContentType()](https://godoc.org/github.com/erikdubbelboer/fasthttp#RequestCtx.SetContentType)
-  * w.Header().Set("Set-Cookie") -> [ctx.Response.Header.SetCookie()](https://godoc.org/github.com/erikdubbelboer/fasthttp#ResponseHeader.SetCookie)
-  * w.Write() -> [ctx.Write()](https://godoc.org/github.com/erikdubbelboer/fasthttp#RequestCtx.Write),
-  [ctx.SetBody()](https://godoc.org/github.com/erikdubbelboer/fasthttp#RequestCtx.SetBody),
-  [ctx.SetBodyStream()](https://godoc.org/github.com/erikdubbelboer/fasthttp#RequestCtx.SetBodyStream),
-  [ctx.SetBodyStreamWriter()](https://godoc.org/github.com/erikdubbelboer/fasthttp#RequestCtx.SetBodyStreamWriter)
-  * w.WriteHeader() -> [ctx.SetStatusCode()](https://godoc.org/github.com/erikdubbelboer/fasthttp#RequestCtx.SetStatusCode)
-  * w.(http.Hijacker).Hijack() -> [ctx.Hijack()](https://godoc.org/github.com/erikdubbelboer/fasthttp#RequestCtx.Hijack)
-  * http.Error() -> [ctx.Error()](https://godoc.org/github.com/erikdubbelboer/fasthttp#RequestCtx.Error)
-  * http.FileServer() -> [fasthttp.FSHandler()](https://godoc.org/github.com/erikdubbelboer/fasthttp#FSHandler),
-  [fasthttp.FS](https://godoc.org/github.com/erikdubbelboer/fasthttp#FS)
-  * http.ServeFile() -> [fasthttp.ServeFile()](https://godoc.org/github.com/erikdubbelboer/fasthttp#ServeFile)
-  * http.Redirect() -> [ctx.Redirect()](https://godoc.org/github.com/erikdubbelboer/fasthttp#RequestCtx.Redirect)
-  * http.NotFound() -> [ctx.NotFound()](https://godoc.org/github.com/erikdubbelboer/fasthttp#RequestCtx.NotFound)
-  * http.StripPrefix() -> [fasthttp.PathRewriteFunc](https://godoc.org/github.com/erikdubbelboer/fasthttp#PathRewriteFunc)
+  * r.Body -> [ctx.PostBody()](https://godoc.org/github.com/OptiServer/fasthttp#RequestCtx.PostBody)
+  * r.URL.Path -> [ctx.Path()](https://godoc.org/github.com/OptiServer/fasthttp#RequestCtx.Path)
+  * r.URL -> [ctx.URI()](https://godoc.org/github.com/OptiServer/fasthttp#RequestCtx.URI)
+  * r.Method -> [ctx.Method()](https://godoc.org/github.com/OptiServer/fasthttp#RequestCtx.Method)
+  * r.Header -> [ctx.Request.Header](https://godoc.org/github.com/OptiServer/fasthttp#RequestHeader)
+  * r.Header.Get() -> [ctx.Request.Header.Peek()](https://godoc.org/github.com/OptiServer/fasthttp#RequestHeader.Peek)
+  * r.Host -> [ctx.Host()](https://godoc.org/github.com/OptiServer/fasthttp#RequestCtx.Host)
+  * r.Form -> [ctx.QueryArgs()](https://godoc.org/github.com/OptiServer/fasthttp#RequestCtx.QueryArgs) +
+  [ctx.PostArgs()](https://godoc.org/github.com/OptiServer/fasthttp#RequestCtx.PostArgs)
+  * r.PostForm -> [ctx.PostArgs()](https://godoc.org/github.com/OptiServer/fasthttp#RequestCtx.PostArgs)
+  * r.FormValue() -> [ctx.FormValue()](https://godoc.org/github.com/OptiServer/fasthttp#RequestCtx.FormValue)
+  * r.FormFile() -> [ctx.FormFile()](https://godoc.org/github.com/OptiServer/fasthttp#RequestCtx.FormFile)
+  * r.MultipartForm -> [ctx.MultipartForm()](https://godoc.org/github.com/OptiServer/fasthttp#RequestCtx.MultipartForm)
+  * r.RemoteAddr -> [ctx.RemoteAddr()](https://godoc.org/github.com/OptiServer/fasthttp#RequestCtx.RemoteAddr)
+  * r.RequestURI -> [ctx.RequestURI()](https://godoc.org/github.com/OptiServer/fasthttp#RequestCtx.RequestURI)
+  * r.TLS -> [ctx.IsTLS()](https://godoc.org/github.com/OptiServer/fasthttp#RequestCtx.IsTLS)
+  * r.Cookie() -> [ctx.Request.Header.Cookie()](https://godoc.org/github.com/OptiServer/fasthttp#RequestHeader.Cookie)
+  * r.Referer() -> [ctx.Referer()](https://godoc.org/github.com/OptiServer/fasthttp#RequestCtx.Referer)
+  * r.UserAgent() -> [ctx.UserAgent()](https://godoc.org/github.com/OptiServer/fasthttp#RequestCtx.UserAgent)
+  * w.Header() -> [ctx.Response.Header](https://godoc.org/github.com/OptiServer/fasthttp#ResponseHeader)
+  * w.Header().Set() -> [ctx.Response.Header.Set()](https://godoc.org/github.com/OptiServer/fasthttp#ResponseHeader.Set)
+  * w.Header().Set("Content-Type") -> [ctx.SetContentType()](https://godoc.org/github.com/OptiServer/fasthttp#RequestCtx.SetContentType)
+  * w.Header().Set("Set-Cookie") -> [ctx.Response.Header.SetCookie()](https://godoc.org/github.com/OptiServer/fasthttp#ResponseHeader.SetCookie)
+  * w.Write() -> [ctx.Write()](https://godoc.org/github.com/OptiServer/fasthttp#RequestCtx.Write),
+  [ctx.SetBody()](https://godoc.org/github.com/OptiServer/fasthttp#RequestCtx.SetBody),
+  [ctx.SetBodyStream()](https://godoc.org/github.com/OptiServer/fasthttp#RequestCtx.SetBodyStream),
+  [ctx.SetBodyStreamWriter()](https://godoc.org/github.com/OptiServer/fasthttp#RequestCtx.SetBodyStreamWriter)
+  * w.WriteHeader() -> [ctx.SetStatusCode()](https://godoc.org/github.com/OptiServer/fasthttp#RequestCtx.SetStatusCode)
+  * w.(http.Hijacker).Hijack() -> [ctx.Hijack()](https://godoc.org/github.com/OptiServer/fasthttp#RequestCtx.Hijack)
+  * http.Error() -> [ctx.Error()](https://godoc.org/github.com/OptiServer/fasthttp#RequestCtx.Error)
+  * http.FileServer() -> [fasthttp.FSHandler()](https://godoc.org/github.com/OptiServer/fasthttp#FSHandler),
+  [fasthttp.FS](https://godoc.org/github.com/OptiServer/fasthttp#FS)
+  * http.ServeFile() -> [fasthttp.ServeFile()](https://godoc.org/github.com/OptiServer/fasthttp#ServeFile)
+  * http.Redirect() -> [ctx.Redirect()](https://godoc.org/github.com/OptiServer/fasthttp#RequestCtx.Redirect)
+  * http.NotFound() -> [ctx.NotFound()](https://godoc.org/github.com/OptiServer/fasthttp#RequestCtx.NotFound)
+  * http.StripPrefix() -> [fasthttp.PathRewriteFunc](https://godoc.org/github.com/OptiServer/fasthttp#PathRewriteFunc)
 
 * *VERY IMPORTANT!* Fasthttp disallows holding references
-to [RequestCtx](https://godoc.org/github.com/erikdubbelboer/fasthttp#RequestCtx) or to its'
-members after returning from [RequestHandler](https://godoc.org/github.com/erikdubbelboer/fasthttp#RequestHandler).
+to [RequestCtx](https://godoc.org/github.com/OptiServer/fasthttp#RequestCtx) or to its'
+members after returning from [RequestHandler](https://godoc.org/github.com/OptiServer/fasthttp#RequestHandler).
 Otherwise [data races](http://blog.golang.org/race-detector) are inevitable.
 Carefully inspect all the net/http request handlers converted to fasthttp whether
 they retain references to RequestCtx or to its' members after returning.
 RequestCtx provides the following _band aids_ for this case:
 
-  * Wrap RequestHandler into [TimeoutHandler](https://godoc.org/github.com/erikdubbelboer/fasthttp#TimeoutHandler).
-  * Call [TimeoutError](https://godoc.org/github.com/erikdubbelboer/fasthttp#RequestCtx.TimeoutError)
+  * Wrap RequestHandler into [TimeoutHandler](https://godoc.org/github.com/OptiServer/fasthttp#TimeoutHandler).
+  * Call [TimeoutError](https://godoc.org/github.com/OptiServer/fasthttp#RequestCtx.TimeoutError)
   before returning from RequestHandler if there are references to RequestCtx or to its' members.
-  See [the example](https://godoc.org/github.com/erikdubbelboer/fasthttp#example-RequestCtx-TimeoutError)
+  See [the example](https://godoc.org/github.com/OptiServer/fasthttp#example-RequestCtx-TimeoutError)
   for more details.
 
 Use this brilliant tool - [race detector](http://blog.golang.org/race-detector) -
 for detecting and eliminating data races in your program. If you detected
 data race related to fasthttp in your program, then there is high probability
-you forgot calling [TimeoutError](https://godoc.org/github.com/erikdubbelboer/fasthttp#RequestCtx.TimeoutError)
-before returning from [RequestHandler](https://godoc.org/github.com/erikdubbelboer/fasthttp#RequestHandler).
+you forgot calling [TimeoutError](https://godoc.org/github.com/OptiServer/fasthttp#RequestCtx.TimeoutError)
+before returning from [RequestHandler](https://godoc.org/github.com/OptiServer/fasthttp#RequestHandler).
 
 * Blind switching from net/http to fasthttp won't give you performance boost.
 While fasthttp is optimized for speed, its' performance may be easily saturated
-by slow [RequestHandler](https://godoc.org/github.com/erikdubbelboer/fasthttp#RequestHandler).
+by slow [RequestHandler](https://godoc.org/github.com/OptiServer/fasthttp#RequestHandler).
 So [profile](http://blog.golang.org/profiling-go-programs) and optimize your
 code after switching to fasthttp. For instance, use [quicktemplate](https://github.com/erikdubbelboer/quicktemplate)
 instead of [html/template](https://golang.org/pkg/html/template/).
 
-* See also [fasthttputil](https://godoc.org/github.com/erikdubbelboer/fasthttp/fasthttputil),
-[fasthttpadaptor](https://godoc.org/github.com/erikdubbelboer/fasthttp/fasthttpadaptor) and
-[expvarhandler](https://godoc.org/github.com/erikdubbelboer/fasthttp/expvarhandler).
+* See also [fasthttputil](https://godoc.org/github.com/OptiServer/fasthttp/fasthttputil),
+[fasthttpadaptor](https://godoc.org/github.com/OptiServer/fasthttp/fasthttpadaptor) and
+[expvarhandler](https://godoc.org/github.com/OptiServer/fasthttp/expvarhandler).
 
 
 # Performance optimization tips for multi-core systems
 
-* Use [reuseport](https://godoc.org/github.com/erikdubbelboer/fasthttp/reuseport) listener.
+* Use [reuseport](https://godoc.org/github.com/OptiServer/fasthttp/reuseport) listener.
 * Run a separate server instance per CPU core with GOMAXPROCS=1.
 * Pin each server instance to a separate CPU core using [taskset](http://linux.die.net/man/1/taskset).
 * Ensure the interrupts of multiqueue network card are evenly distributed between CPU cores.
@@ -510,15 +510,15 @@ uintBuf := fasthttp.AppendUint(nil, 1234)
   above for more details. Also certain net/http API parts are suboptimal
   for use:
   * Compare [net/http connection hijacking](https://golang.org/pkg/net/http/#Hijacker)
-    to [fasthttp connection hijacking](https://godoc.org/github.com/erikdubbelboer/fasthttp#RequestCtx.Hijack).
+    to [fasthttp connection hijacking](https://godoc.org/github.com/OptiServer/fasthttp#RequestCtx.Hijack).
   * Compare [net/http Request.Body reading](https://golang.org/pkg/net/http/#Request)
-    to [fasthttp request body reading](https://godoc.org/github.com/erikdubbelboer/fasthttp#RequestCtx.PostBody).
+    to [fasthttp request body reading](https://godoc.org/github.com/OptiServer/fasthttp#RequestCtx.PostBody).
 
 * *Why fasthttp doesn't support HTTP/2.0 and WebSockets?*
 
   There are [plans](TODO) for adding HTTP/2.0 and WebSockets support
   in the future.
-  In the mean time, third parties may use [RequestCtx.Hijack](https://godoc.org/github.com/erikdubbelboer/fasthttp#RequestCtx.Hijack)
+  In the mean time, third parties may use [RequestCtx.Hijack](https://godoc.org/github.com/OptiServer/fasthttp#RequestCtx.Hijack)
   for implementing these goodies. See [the first third-party websocket implementation on the top of fasthttp](https://github.com/leavengood/websocket).
 
 * *Are there known net/http advantages comparing to fasthttp?*
@@ -541,11 +541,11 @@ uintBuf := fasthttp.AppendUint(nil, 1234)
 * *Which GO versions are supported by fasthttp?*
 
   Go1.5+. Older versions won't be supported, since their standard package
-  [miss useful functions](https://github.com/erikdubbelboer/fasthttp/issues/5).
+  [miss useful functions](https://github.com/OptiServer/fasthttp/issues/5).
 
 * *Please provide real benchmark data and sever information*
 
-  See [this issue](https://github.com/erikdubbelboer/fasthttp/issues/4).
+  See [this issue](https://github.com/OptiServer/fasthttp/issues/4).
 
 * *Are there plans to add request routing to fasthttp?*
 
@@ -556,20 +556,20 @@ uintBuf := fasthttp.AppendUint(nil, 1234)
     * [fasthttprouter](https://github.com/buaazp/fasthttprouter)
     * [lu](https://github.com/vincentLiuxiang/lu)
 
-  See also [this issue](https://github.com/erikdubbelboer/fasthttp/issues/9) for more info.
+  See also [this issue](https://github.com/OptiServer/fasthttp/issues/9) for more info.
 
 * *I detected data race in fasthttp!*
 
-  Cool! [File a bug](https://github.com/erikdubbelboer/fasthttp/issues/new). But before
+  Cool! [File a bug](https://github.com/OptiServer/fasthttp/issues/new). But before
   doing this check the following in your code:
 
-  * Make sure there are no references to [RequestCtx](https://godoc.org/github.com/erikdubbelboer/fasthttp#RequestCtx)
-  or to its' members after returning from [RequestHandler](https://godoc.org/github.com/erikdubbelboer/fasthttp#RequestHandler).
-  * Make sure you call [TimeoutError](https://godoc.org/github.com/erikdubbelboer/fasthttp#RequestCtx.TimeoutError)
-  before returning from [RequestHandler](https://godoc.org/github.com/erikdubbelboer/fasthttp#RequestHandler)
-  if there are references to [RequestCtx](https://godoc.org/github.com/erikdubbelboer/fasthttp#RequestCtx)
+  * Make sure there are no references to [RequestCtx](https://godoc.org/github.com/OptiServer/fasthttp#RequestCtx)
+  or to its' members after returning from [RequestHandler](https://godoc.org/github.com/OptiServer/fasthttp#RequestHandler).
+  * Make sure you call [TimeoutError](https://godoc.org/github.com/OptiServer/fasthttp#RequestCtx.TimeoutError)
+  before returning from [RequestHandler](https://godoc.org/github.com/OptiServer/fasthttp#RequestHandler)
+  if there are references to [RequestCtx](https://godoc.org/github.com/OptiServer/fasthttp#RequestCtx)
   or to its' members, which may be accessed by other goroutines.
 
 * *I didn't find an answer for my question here*
 
-  Try exploring [these questions](https://github.com/erikdubbelboer/fasthttp/issues?q=label%3Aquestion).
+  Try exploring [these questions](https://github.com/OptiServer/fasthttp/issues?q=label%3Aquestion).
