@@ -3,6 +3,7 @@
 package fasthttpadaptor
 
 import (
+	"bufio"
 	"io"
 	"net/http"
 	"net/url"
@@ -30,6 +31,41 @@ func NewFastHTTPHandlerFunc(h http.HandlerFunc) fasthttp.RequestHandler {
 	return NewFastHTTPHandler(h)
 }
 
+// NewHTTPHandler wraps fasthttp handler to net/http handler,
+// so it can be passed to fasthttp server.
+func NewHTTPHandler(h fasthttp.RequestHandler) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+
+		// convert the request
+		ctx := new(fasthttp.RequestCtx)
+		ctx.Request.SetRequestURI(r.RequestURI)
+		ctx.Request.Header.SetMethod(r.Method)
+		ctx.Request.SetHost(r.Host)
+
+		for k, va := range r.Header {
+			for _, v := range va {
+				ctx.Request.Header.Add(k, v)
+			}
+		}
+
+		ctx.Request.SetBodyStreamWriter(func(wb *bufio.Writer) {
+			defer r.Body.Close()
+			io.Copy(wb, r.Body)
+		})
+
+		// run the handler
+		h(ctx)
+
+		// send the response
+		ctx.Response.Header.VisitAll(func(key []byte, value []byte) {
+			w.Header().Add(string(key), string(value))
+		})
+		w.WriteHeader(ctx.Response.StatusCode())
+		ctx.Response.BodyWriteTo(w)
+
+	}
+}
+
 // NewFastHTTPHandler wraps net/http handler to fasthttp request handler,
 // so it can be passed to fasthttp server.
 //
@@ -49,7 +85,6 @@ func NewFastHTTPHandlerFunc(h http.HandlerFunc) fasthttp.RequestHandler {
 func NewFastHTTPHandler(h http.Handler) fasthttp.RequestHandler {
 	return func(ctx *fasthttp.RequestCtx) {
 		var r http.Request
-
 		body := ctx.PostBody()
 		r.Method = string(ctx.Method())
 		r.Proto = "HTTP/1.1"
